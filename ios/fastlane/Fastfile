@@ -42,7 +42,8 @@ platform :ios do
       export_options: {
         "provisioningProfiles": {
           "org.reactjs.native.example.catalystDemoReactNative": "match AdHoc org.reactjs.native.example.catalystDemoReactNative"
-        }
+        },
+      xcargs: "CC='clang' CPLUSPLUS='clang++' LD='clang' LDPLUSPLUS='clang++'"
       }
     )
   end
