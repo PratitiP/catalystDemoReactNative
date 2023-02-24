@@ -83,10 +83,14 @@ jobs:
           cd ios
           bundle exec fastlane certificates
 
-      - name: Build ipa
+      - name: Install cocoapods
         run: |
           cd ios
           pod install
+
+      - name: Build ipa
+        run: |
+          cd ios
           bundle exec fastlane build
         env:
           BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
