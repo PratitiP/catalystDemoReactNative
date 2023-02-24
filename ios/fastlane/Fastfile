@@ -1,0 +1,50 @@
+default_platform(:ios)
+
+platform :ios do
+
+  desc 'Create keychain'
+  lane :keychain_produce do
+    create_keychain(
+  name: "catalystDemoReactNative_adhoc",
+  password: ENV['KEYCHAIN_PASSWORD'],
+  unlock: true,
+  timeout: 0,
+  lock_when_sleeps: true
+)
+  end
+
+  desc 'Fetch certificates and provisioning profiles'
+  lane :certificates do
+    keychain_produce
+    match(
+        type: 'adhoc',
+        app_identifier: 'org.reactjs.native.example.catalystDemoReactNative',
+        readonly:true,
+        keychain_name:'catalystDemoReactNative_adhoc',
+        keychain_password: ENV['KEYCHAIN_PASSWORD']
+    )
+  end
+
+  desc 'Build the iOS application.'
+  lane :build do
+    # increment_build_number(
+    #     build_number: ENV['BUNDLE_VERSION']
+    # )
+    # increment_version_number(
+    #     version_number: ENV['BUNDLE_SHORT_VERSION']
+    # )
+    gym(
+      scheme: "catalystDemoReactNative",
+      workspace: 'catalystDemoReactNative.xcworkspace',
+      # project: './ios/YourAppName.xcodeproj', # Use this command if you don't have an iOS .xcworkspace file.
+      configuration: 'Release',
+      export_method: 'ad-hoc',
+      export_options: {
+        "provisioningProfiles": {
+          "org.reactjs.native.example.catalystDemoReactNative": "match AdHoc org.reactjs.native.example.catalystDemoReactNative"
+        }
+      }
+    )
+  end
+
+end
