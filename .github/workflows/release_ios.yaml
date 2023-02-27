@@ -5,11 +5,11 @@ on:
     inputs:
       select_build_type:
         type: choice
-          description: 'Select build type'
-          options: 
-          - '.ipa'
-          - '.app'
-          required: true
+        description: 'Select build type'
+        options:
+        - '.ipa'
+        - '.app'
+        required: true
 
 env:
   KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
