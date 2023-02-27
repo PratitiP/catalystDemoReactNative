@@ -7,8 +7,8 @@ on:
         type: choice
         description: 'Select build type'
         options:
-        - '.ipa'
-        - '.app'
+          - '.ipa'
+          - '.app'
         required: true
 
 env:
@@ -90,7 +90,7 @@ jobs:
           pod install
 
       - name: Build ipa
-        if: ${{ github.event.inputs.select_build_type === '.ipa' }}
+        if: ${{ github.event.inputs.select_build_type == '.ipa' }}
         run: |
           cd ios
           bundle exec fastlane build
@@ -99,7 +99,7 @@ jobs:
           BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
 
       - name: Build app for simulator
-        if: ${{ github.event.inputs.select_build_type === '.app' }}
+        if: ${{ github.event.inputs.select_build_type == '.app' }}
         run: |
           cd ios
           bundle exec fastlane build_app_for_simulator
