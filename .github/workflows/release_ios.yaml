@@ -32,6 +32,11 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: yarn.lock
 
+      - name: Configure ccache
+        run: |
+          ccache --set-config="compiler_check=content"
+          ccache --show-config
+
       - name: Install all dependencies
         run: yarn install --immutable
 
