@@ -39,6 +39,14 @@ Fetch certificates and provisioning profiles
 
 Build the iOS application.
 
+### ios build_app_for_simulator
+
+```sh
+[bundle exec] fastlane ios build_app_for_simulator
+```
+
+Build the iOS application simulator.
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

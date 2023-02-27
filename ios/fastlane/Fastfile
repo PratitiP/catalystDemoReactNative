@@ -48,4 +48,18 @@ platform :ios do
     )
   end
 
+  desc 'Build the iOS application simulator.'
+  lane :build_app_for_simulator do
+    gym(
+      scheme: "catalystDemoReactNative",
+      workspace: 'catalystDemoReactNative.xcworkspace',
+      configuration: "Release",
+      configuration: "Release",
+      skip_package_ipa: true,
+      skip_archive: true,
+      skip_codesigning:true,
+     #destination: "platform=iOS Simulator,OS=15.5,name=iPhone 13",
+    )
+  end
+
 end
