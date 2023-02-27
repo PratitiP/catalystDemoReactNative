@@ -3,12 +3,13 @@ name: Release ios beta
 on:
   workflow_dispatch:
     inputs:
-      bundle_short_version:
-        description: 'Release Version'
-        required: false
-      release_notes:
-        description: 'Release Notes'
-        required: false
+      select_build_type:
+        type: choice
+          description: 'Select build type'
+          options: 
+          - '.ipa'
+          - '.app'
+          required: true
 
 env:
   KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
@@ -89,6 +90,7 @@ jobs:
           pod install
 
       - name: Build ipa
+        if: ${{ github.event.inputs.select_build_type === '.ipa' }}
         run: |
           cd ios
           bundle exec fastlane build
@@ -96,14 +98,14 @@ jobs:
           BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
           BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
 
-      # - name: Build app for simulator
-      #   run: |
-      #     cd apps/mobile/ios
-      #     pod install
-      #     bundle exec fastlane build_app_for_simulator
-      #   env:
-      #     BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
-      #     BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
+      - name: Build app for simulator
+        if: ${{ github.event.inputs.select_build_type === '.app' }}
+        run: |
+          cd ios
+          bundle exec fastlane build_app_for_simulator
+        env:
+          BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
+          BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
 
       # - name: Release ios beta ipa to firebase
       #   run: |
