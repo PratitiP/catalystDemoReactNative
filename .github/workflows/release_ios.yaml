@@ -34,6 +34,7 @@ jobs:
           ln -s $(which ccache) /usr/local/bin/c++
           ln -s $(which ccache) /usr/local/bin/clang
           ln -s $(which ccache) /usr/local/bin/clang++
+          echo $(which clang)
 
       - name: Setup yarn and caching dependencies
         uses: actions/setup-node@v3
