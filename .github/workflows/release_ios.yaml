@@ -36,6 +36,11 @@ jobs:
           ln -s $(which ccache) /usr/local/bin/clang++
           echo $(which clang)
 
+      - name: Configure ccache
+        run: |
+          ccache --set-config="compiler_check=content"
+          ccache --show-config
+
       - name: Setup yarn and caching dependencies
         uses: actions/setup-node@v3
         with:
