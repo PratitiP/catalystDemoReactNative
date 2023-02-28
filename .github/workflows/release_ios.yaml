@@ -22,8 +22,18 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Restore buildcache
-        uses: mikehardy/buildcache-action@v2
+      # - name: Restore buildcache
+      #   uses: mikehardy/buildcache-action@v2
+
+      - name: Install ccache
+        run: |
+          brew install ccache
+          ln -s $(which ccache) /usr/local/bin/gcc
+          ln -s $(which ccache) /usr/local/bin/g++
+          ln -s $(which ccache) /usr/local/bin/cc
+          ln -s $(which ccache) /usr/local/bin/c++
+          ln -s $(which ccache) /usr/local/bin/clang
+          ln -s $(which ccache) /usr/local/bin/clang++
 
       - name: Setup yarn and caching dependencies
         uses: actions/setup-node@v3
@@ -31,11 +41,6 @@ jobs:
           node-version: 16
           cache: 'yarn'
           cache-dependency-path: yarn.lock
-
-      - name: Configure ccache
-        run: |
-          ccache --set-config="compiler_check=content"
-          ccache --show-config
 
       - name: Install all dependencies
         run: yarn install --immutable
