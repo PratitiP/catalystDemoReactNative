@@ -35,6 +35,11 @@ jobs:
           ln -s $(which ccache) /usr/local/bin/clang
           ln -s $(which ccache) /usr/local/bin/clang++
           echo $(which clang)
+          export CCACHE_SLOPPINESS=clang_index_store,file_stat_matches,include_file_ctime,include_file_mtime,ivfsoverlay,pch_defines,modules,system_headers,time_macros
+          export CCACHE_FILECLONE=true
+          export CCACHE_DEPEND=true
+          export CCACHE_INODECACHE=true
+          echo $CCACHE_SLOPPINESS
 
       - name: Configure ccache
         run: |
@@ -109,7 +114,7 @@ jobs:
         if: ${{ github.event.inputs.select_build_type == '.ipa' }}
         run: |
           cd ios
-          bundle exec fastlane build
+          time bundle exec fastlane build
         env:
           BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
           BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
@@ -118,10 +123,13 @@ jobs:
         if: ${{ github.event.inputs.select_build_type == '.app' }}
         run: |
           cd ios
-          bundle exec fastlane build_app_for_simulator
+          time bundle exec fastlane build_app_for_simulator
         env:
           BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
           BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
+
+      - name: Check ccache statastics
+        run: ccache -s
 
       # - name: Release ios beta ipa to firebase
       #   run: |
