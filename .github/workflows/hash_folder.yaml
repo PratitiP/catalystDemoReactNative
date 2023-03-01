@@ -18,7 +18,7 @@ jobs:
             ios/fastlane
 
       - name: Output the hash folder value
-        run: echo ${steps.hashing.outputs.hash}
+        run: echo ${{steps.hashing.outputs.hash}}
 
       - name: Cache Pods
         uses: actions/cache@v3
@@ -27,4 +27,4 @@ jobs:
             ios/Pods
             ~/Library/Caches/CocoaPods
             ~/.cocoapods
-          key: cache-${{ runner.os }}-pods-${{ steps.hashing.outputs.hash }}
+          key: cache-${{ runner.os }}-pods-${{steps.hashing.outputs.hash }}
