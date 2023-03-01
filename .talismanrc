@@ -1,4 +1,6 @@
 fileignoreconfig:
-- filename: ios/catalystDemoReactNative.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
-  checksum: 92c5b0b75dd637836aaf4cf46f4df2be44726e16d3f11d197e0c0ee6693c8a6a
-version: ""
+  - filename: ios/catalystDemoReactNative.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+    checksum: 92c5b0b75dd637836aaf4cf46f4df2be44726e16d3f11d197e0c0ee6693c8a6a
+  - filename: .github/workflows/hash_folder.yaml
+    checksum: b0304c7c504dc1a4ab5efcfe6f4cfe1f640a1490e27785c530d129a4fecd1c07
+version: ''

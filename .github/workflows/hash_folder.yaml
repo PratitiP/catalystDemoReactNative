@@ -1,0 +1,30 @@
+name: 'Hashing the folder'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  hash:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Hash the folder
+        uses: theowenyoung/folder-hash@v3
+        id: hashing
+        with:
+          path: |
+            ios/fastlane
+
+      - name: Output the hash folder value
+        run: echo ${steps.hashing.outputs.hash}
+
+      - name: Cache Pods
+        uses: actions/cache@v3
+        with:
+          path: |
+            ios/Pods
+            ~/Library/Caches/CocoaPods
+            ~/.cocoapods
+          key: cache-${{ runner.os }}-pods-${{ steps.hashing.outputs.hash }}
