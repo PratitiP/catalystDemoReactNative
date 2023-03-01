@@ -28,3 +28,8 @@ jobs:
             ~/Library/Caches/CocoaPods
             ~/.cocoapods
           key: cache-${{ runner.os }}-pods-${{steps.hashing.outputs.hash }}
+
+      - name: Install cocoapods
+        run: |
+          cd ios
+          pod install
