@@ -25,21 +25,15 @@ jobs:
       # - name: Restore buildcache
       #   uses: mikehardy/buildcache-action@v2
 
-      - name: Install ccache
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1
+        with:
+          key: ${{ runner.os }}-${{ matrix.variant.os }}-${{ matrix.variant.arch }}
+          max-size: '2.0G'
+
+      - name: Prepend ccache executables to the PATH
         run: |
-          brew install ccache
-          ln -s $(which ccache) /usr/local/bin/gcc
-          ln -s $(which ccache) /usr/local/bin/g++
-          ln -s $(which ccache) /usr/local/bin/cc
-          ln -s $(which ccache) /usr/local/bin/c++
-          ln -s $(which ccache) /usr/local/bin/clang
-          ln -s $(which ccache) /usr/local/bin/clang++
-          echo $(which clang)
-          export CCACHE_SLOPPINESS=clang_index_store,file_stat_matches,include_file_ctime,include_file_mtime,ivfsoverlay,pch_defines,modules,system_headers,time_macros
-          export CCACHE_FILECLONE=true
-          export CCACHE_DEPEND=true
-          export CCACHE_INODECACHE=true
-          echo $CCACHE_SLOPPINESS
+          echo "/usr/lib/ccache:/usr/local/opt/ccache/libexec" >> $GITHUB_PATH
 
       - name: Configure ccache
         run: |
