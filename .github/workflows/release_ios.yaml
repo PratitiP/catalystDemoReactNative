@@ -156,6 +156,18 @@ jobs:
           BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
           BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
 
+      - name: Post - Hash the folder
+        uses: theowenyoung/folder-hash@v3
+        id: hashingPost
+        with:
+          path: |
+            ios/.ccache
+
+      - name: Post - Output the hash folder value and size of it
+        run: |
+          echo ${{steps.hashingPost.outputs.hash}}
+          du -h /Users/runner/work/catalystDemoReactNative/catalystDemoReactNative/ios/.ccache
+
       - name: Check ccache statastics
         run: ccache -s
 
