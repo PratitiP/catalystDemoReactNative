@@ -3,4 +3,6 @@ fileignoreconfig:
     checksum: 92c5b0b75dd637836aaf4cf46f4df2be44726e16d3f11d197e0c0ee6693c8a6a
   - filename: .github/workflows/hash_folder.yaml
     checksum: 4d2cf2c8511f918aaa51717454bc602a1ec3354e8a549574c152a94f15685d0a
+  - filename: .github/workflows/release_ios.yaml
+    checksum: e536a8af6d13c794e06a4822dd5b36a9bb2f6bc5821ab502de6e69b517ed7a0c
 version: ''

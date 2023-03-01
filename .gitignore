@@ -63,3 +63,7 @@ buck-out/
 /vendor/bundle/
 
 ios/*.dSYM.zip
+
+
+#ccache
+/ios/.ccache
