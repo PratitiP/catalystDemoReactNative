@@ -27,9 +27,6 @@ jobs:
 
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1
-        with:
-          key: ${{ runner.os }}-${{ matrix.variant.os }}-${{ matrix.variant.arch }}
-          max-size: '2.0G'
 
       - name: Prepend ccache executables to the PATH
         run: |
@@ -38,6 +35,10 @@ jobs:
       - name: Configure ccache
         run: |
           ccache --set-config="compiler_check=content"
+          ccache --set-config="sloppiness=clang_index_store,file_stat_matches,include_file_ctime,include_file_mtime,ivfsoverlay,pch_defines,modules,system_headers,time_macros"
+          ccache --set-config="depend_mode=true"
+          ccache --set-config="file_clone=true"
+          ccache --set-config="inode_cache=true"
           ccache --show-config
 
       - name: Setup yarn and caching dependencies
