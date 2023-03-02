@@ -5,4 +5,8 @@ fileignoreconfig:
     checksum: 4d2cf2c8511f918aaa51717454bc602a1ec3354e8a549574c152a94f15685d0a
   - filename: .github/workflows/release_ios.yaml
     checksum: a57b6c83f352a7b0f8cd197af7cf84a02eec95822c53b5671cde0013a27dbbd0
+  - filename: ios/Podfile.lock
+    checksum: 2335f5f43b6ffa5390c29add0529816d01ddd99595cadff9b37fee377f892fb4
+  - filename: yarn.lock
+    checksum: f2aba6d9aebc827fc66df2cc68b8e9f1478a8df861eb1e2b8bc82adb48281281
 version: ''
