@@ -4,7 +4,7 @@ fileignoreconfig:
   - filename: .github/workflows/hash_folder.yaml
     checksum: 4d2cf2c8511f918aaa51717454bc602a1ec3354e8a549574c152a94f15685d0a
   - filename: .github/workflows/release_ios.yaml
-    checksum: a57b6c83f352a7b0f8cd197af7cf84a02eec95822c53b5671cde0013a27dbbd0
+    checksum: ca233f92c83c7fd343c2d4d163eb7d2d2ffe448e8ec907a507526afae575b205
   - filename: ios/Podfile.lock
     checksum: 2335f5f43b6ffa5390c29add0529816d01ddd99595cadff9b37fee377f892fb4
   - filename: yarn.lock
