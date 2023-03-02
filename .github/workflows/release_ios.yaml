@@ -26,23 +26,32 @@ jobs:
       # - name: Restore buildcache
       #   uses: mikehardy/buildcache-action@v2
 
-      - name: Install ccache
-        run: |
-          brew install ccache
-          ln -s $(which ccache) /usr/local/bin/gcc
-          ln -s $(which ccache) /usr/local/bin/g++
-          ln -s $(which ccache) /usr/local/bin/cc
-          ln -s $(which ccache) /usr/local/bin/c++
-          ln -s $(which ccache) /usr/local/bin/clang
-          ln -s $(which ccache) /usr/local/bin/clang++
-          echo $(which clang)
-
-      # - name: ccache
-      #   uses: hendrikmuhs/ccache-action@v1
+      # - name: Install ccache
+      #   run: |
+      #     brew install ccache
+      #     ln -s $(which ccache) /usr/local/bin/gcc
+      #     ln -s $(which ccache) /usr/local/bin/g++
+      #     ln -s $(which ccache) /usr/local/bin/cc
+      #     ln -s $(which ccache) /usr/local/bin/c++
+      #     ln -s $(which ccache) /usr/local/bin/clang
+      #     ln -s $(which ccache) /usr/local/bin/clang++
+      #     echo $(which clang)
 
       # - name: Prepend ccache executables to the PATH
       #   run: |
       #     echo "/usr/lib/ccache:/usr/local/opt/ccache/libexec" >> $GITHUB_PATH
+
+      # - name: Restore ccache
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: |
+      #       ~/Library/Caches/ccache
+      #     key: cache-${{ runner.os }}-ccache-
+
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1
+        with:
+          max-size: '2.0G'
 
       - name: Configure ccache
         run: |
@@ -52,13 +61,6 @@ jobs:
           ccache --set-config="file_clone=true"
           ccache --set-config="inode_cache=true"
           ccache --show-config
-
-      - name: Restore ccache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/Library/Caches/ccache
-          key: cache-${{ runner.os }}-ccache-
 
       - name: pre cache statastics
         run: ccache -s
