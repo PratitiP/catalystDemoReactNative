@@ -53,22 +53,12 @@ jobs:
           ccache --set-config="inode_cache=true"
           ccache --show-config
 
-      - name: Hash the folder
-        uses: theowenyoung/folder-hash@v3
-        id: hashing
-        with:
-          path: |
-            /Users/runner/Library/Caches/ccache
-
-      - name: Output the hash folder value
-        run: echo ${{steps.hashing.outputs.hash}}
-
       - name: Restore ccache
         uses: actions/cache@v3
         with:
           path: |
             ~/Library/Caches/ccache
-          key: cache-${{ runner.os }}-ccache-${{steps.hashing.outputs.hash }}
+          key: cache-${{ runner.os }}-ccache-
 
       - name: pre cache statastics
         run: ccache -s
@@ -120,11 +110,6 @@ jobs:
           base64 -d -i ssh_private_key.b64 > ios/ssh_private_key
           chmod 600 ios/ssh_private_key
 
-      # - name: Setup google service Keys for firebase
-      #   run: |
-      #     echo ${{ secrets.GOOGLE_SERVICES_INFO_PLIST_B64 }} > GoogleService-Info.b64
-      #     base64 -d -i GoogleService-Info.b64 > apps/mobile/ios/GoogleService-Info.plist
-
       - name: Fetching certificate and profile
         run: |
           export MATCH_GIT_PRIVATE_KEY="./ssh_private_key"
@@ -155,31 +140,9 @@ jobs:
           BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
           BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
 
-      - name: Post - Hash the folder
-        uses: theowenyoung/folder-hash@v3
-        id: hashingPost
-        with:
-          path: |
-            ios/.ccache
-
-      - name: Post - Output the hash folder value and size of it
-        run: |
-          echo ${{steps.hashingPost.outputs.hash}}
-          du -h /Users/runner/Library/Caches/ccache
-
       - name: Check ccache statastics
         run: ccache -s
 
-      # - name: Release ios beta ipa to firebase
-      #   run: |
-      #     cd apps/mobile/ios
-      #     bundle exec fastlane distribute
-      #   env:
-      #     FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
-      #     FIREBASE_APP_ID_IOS: ${{ secrets.FIREBASE_APP_ID_IOS }}
-      #     RELEASE_NOTES: ${{ github.event.inputs.release_notes }}
-
-      # TODO find upload artifact for ios
       - name: Upload ipa, dSYM (debug symbol)
         uses: actions/upload-artifact@v3
         with:
