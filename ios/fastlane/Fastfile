@@ -53,11 +53,10 @@ platform :ios do
       scheme: "catalystDemoReactNative",
       workspace: 'catalystDemoReactNative.xcworkspace',
       configuration: "Release",
-      configuration: "Release",
       skip_package_ipa: true,
       skip_archive: true,
       skip_codesigning:true,
-      destination: "platform=iOS Simulator,OS=15.5,name=iPhone 12",
+      destination: "generic/platform=iOS Simulator",
     )
   end
 

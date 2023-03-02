@@ -64,6 +64,3 @@ buck-out/
 
 ios/*.dSYM.zip
 
-
-#ccache
-/ios/.ccache

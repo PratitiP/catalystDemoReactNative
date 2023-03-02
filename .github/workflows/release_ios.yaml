@@ -51,7 +51,6 @@ jobs:
           ccache --set-config="depend_mode=true"
           ccache --set-config="file_clone=true"
           ccache --set-config="inode_cache=true"
-          ccache --set-config="cache_dir=/Users/runner/work/catalystDemoReactNative/catalystDemoReactNative/ios/.ccache"
           ccache --show-config
 
       - name: Hash the folder
@@ -59,7 +58,7 @@ jobs:
         id: hashing
         with:
           path: |
-            ios/.ccache
+            /Users/runner/Library/Caches/ccache
 
       - name: Output the hash folder value
         run: echo ${{steps.hashing.outputs.hash}}
@@ -68,7 +67,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            ios/.ccache
+            ~/Library/Caches/ccache
           key: cache-${{ runner.os }}-ccache-${{steps.hashing.outputs.hash }}
 
       - name: pre cache statastics
