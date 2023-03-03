@@ -23,13 +23,13 @@ jobs:
            -H "X-GitHub-Api-Version: 2022-11-28" \
            /repos/$OWNER/$REPO/actions/caches)"
 
-          echo '::set-output name=CACHE_LIST::$cacheList'
+          echo "cache_list=$cacheList" >> "$GITHUB_OUTPUT"
 
       - name: echo command
         run: echo 'Owner' = $OWNER 'Repo' $REPO 'GH_TOKEN'= $GH_TOKEN
 
       - name: Print Actions Cache
-        run: echo "${{steps.cache-list.outputs.CACHE_LIST}}"
+        run: echo "${{steps.cache-list.outputs.cache_list}}"
 
       # - name: Loop the array
       #   run: |
