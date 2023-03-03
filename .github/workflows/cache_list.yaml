@@ -25,6 +25,9 @@ jobs:
 
       - name: Get the caches
         id: list-caches
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           function list_caches {
           gh api \
