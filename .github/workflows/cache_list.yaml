@@ -22,3 +22,18 @@ jobs:
 
       - name: echo command
         run: echo 'Owner' = $OWNER 'Repo' $REPO 'GH_TOKEN'= $GH_TOKEN
+
+      - name: Actions Cache
+        run: echo $cacheList
+
+      # - name: Loop the array
+      #   run: |
+      #     for item in "${cacheList[@]}"; do
+      #     name=$(echo "$item" | jq -r '.name')
+      #     age=$(echo "$item" | jq -r '.age')
+      #     # Check if the name contains "a"
+      #     if [[ "$name" == *"a"* ]]; then
+      #       echo "Name contains 'a': $name"
+      #     else
+      #       echo "Name does not contain 'a': $name"
+      #     fi done
