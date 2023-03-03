@@ -31,8 +31,8 @@ jobs:
       - name: Print Actions Cache
         run: echo "${{steps.cache-list.outputs.cache_list}}"
 
-      - name: Print the array ids
+      - name: Print the cache ids
         run: |
           cacheList = ${{steps.cache-list.outputs.cache_list}}
-          all_ids="$(jq '.actions_caches[].id' cacheList | tr '\n' ' ')"
+          all_ids="$(jq '.actions_caches[].id' $cacheList | tr '\n' ' ')"
           echo $all_ids
