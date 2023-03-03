@@ -15,24 +15,26 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Cache Get
-        id: cache-list
+      # - name: List caches
+      #  id: list-caches
+      #  shell: bash
+      #  env:
+      #     GH_TOKEN: ${{ inputs.github-token }}
+      #     PAGE_SIZE: ${{ inputs.page-size }}
+      #  run: |
+
+      - name: Get the caches
+        id: list-caches
         run: |
-          cacheList="$(gh api \
-          -H "Accept: application/vnd.github+json" \
-           -H "X-GitHub-Api-Version: 2022-11-28" \
-           /repos/$OWNER/$REPO/actions/caches)"
-
-          echo "cache_list=$cacheList" >> "$GITHUB_OUTPUT"
-
-      - name: echo command
-        run: echo 'Owner' = $OWNER 'Repo' $REPO 'GH_TOKEN'= $GH_TOKEN
-
-      - name: Print Actions Cache
-        run: echo "${{steps.cache-list.outputs.cache_list}}"
-
-      - name: Print the cache ids
-        run: |
-
-          all_ids=echo "${{steps.cache-list.outputs.cache_list}}" | jq '.actions_caches[].id'
-          echo $all_ids
+          function list_caches {
+          gh api \
+            -H 'Accept: application/vnd.github+json' \
+            "/repos/${REPO}/actions/caches"
+          } 
+          pageindex=1
+          echo "fetching page ${pageindex}..."
+          first="$(list_caches "${pageindex}")"
+          total_count="$(jq -r '.total_count' <<< "${first}")"
+          all_ids="$(jq '.actions_caches[].id' <<< "${first}" | tr '\n' ' ')"
+          echo "cache ids total: ${all_ids}"
+          echo "cache_ids=$all_ids" >> "$GITHUB_OUTPUT"
