@@ -33,6 +33,6 @@ jobs:
 
       - name: Print the cache ids
         run: |
-          cacheList = ${{steps.cache-list.outputs.cache_list}}
-          all_ids="$(jq '.actions_caches[].id'| tr '\n' ' ')"
+
+          all_ids="$(jq '.actions_caches[].id' ${{steps.cache-list.outputs.cache_list}} | tr '\n' ' ')"
           echo $all_ids
