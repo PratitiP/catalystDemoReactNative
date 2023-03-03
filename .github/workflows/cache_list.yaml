@@ -12,9 +12,12 @@ jobs:
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
-      - name: Get the cache lists
-      - id: cache-list
-      - run: |
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Cache Get
+        id: cache-list
+        run: |
           cacheList="$(gh api \
           -H "Accept: application/vnd.github+json" \
            -H "X-GitHub-Api-Version: 2022-11-28" \
