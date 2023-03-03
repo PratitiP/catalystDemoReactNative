@@ -1,0 +1,24 @@
+name: Cache List
+on:
+  workflow_dispatch:
+
+env:
+  OWNER: ${{ github.repository_owner }}
+  REPO: ${{ github.event.repository.name }}
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  cache:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          cacheList="$(gh api \
+          -H "Accept: application/vnd.github+json" \
+           -H "X-GitHub-Api-Version: 2022-11-28" \
+           /repos/$OWNER/$REPO/actions/caches)"
+
+          echo 'cacheList=' $cacheList
+
+      - name: echo command
+        run: echo 'Owner' = $OWNER 'Repo' $REPO 'GH_TOKEN'= $GH_TOKEN
