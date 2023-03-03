@@ -29,11 +29,11 @@ jobs:
         run: echo 'Owner' = $OWNER 'Repo' $REPO 'GH_TOKEN'= $GH_TOKEN
 
       - name: Print Actions Cache
-        run: echo "${{steps.cache-list.outputs.cache_list}}"
+        run: echo "${{steps.cache-list.outputs.cache_list.actions_caches}}"
 
       # - name: Loop the array
       #   run: |
-      #     for item in "${cacheList[@]}"; do
+      #     for item in "${{steps.cache-list.outputs.cache_list.}}"; do
       #     name=$(echo "$item" | jq -r '.name')
       #     age=$(echo "$item" | jq -r '.age')
       #     # Check if the name contains "a"
