@@ -35,10 +35,8 @@ jobs:
           -H "X-GitHub-Api-Version: 2022-11-28" \
           /repos/$OWNER/$REPO/actions/caches
           } 
-          pageindex=1
-          echo "fetching page ${pageindex}..."
-          first="$(list_caches "${pageindex}")"
+          first="$(list_caches)"
           total_count="$(jq -r '.total_count' <<< "${first}")"
-          all_ids="$(jq '.actions_caches[].id' <<< "${first}" | tr '\n' ' ')"
-          echo "cache ids total: ${all_ids}"
+          all_caches="$(jq '.actions_caches[].key' <<< "${first}" | tr '\n' ' ')"
+          echo "cache list total: ${all_caches}"
           echo "cache_ids=$all_ids" >> "$GITHUB_OUTPUT"
