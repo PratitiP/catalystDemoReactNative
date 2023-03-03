@@ -31,8 +31,9 @@ jobs:
         run: |
           function list_caches {
           gh api \
-            -H 'Accept: application/vnd.github+json' \
-            "/repos/${REPO}/actions/caches"
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/$OWNER/$REPO/actions/caches
           } 
           pageindex=1
           echo "fetching page ${pageindex}..."
