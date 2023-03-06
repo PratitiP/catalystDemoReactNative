@@ -23,8 +23,8 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Restore buildcache
-        uses: mikehardy/buildcache-action@v2
+      # - name: Restore buildcache
+      #   uses: mikehardy/buildcache-action@v2
 
       - name: Setup yarn and caching dependencies
         uses: actions/setup-node@v3
