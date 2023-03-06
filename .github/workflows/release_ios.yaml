@@ -26,6 +26,16 @@ jobs:
       - name: Restore buildcache
         uses: mikehardy/buildcache-action@v2
 
+      - name: Setup yarn and caching dependencies
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'yarn'
+          cache-dependency-path: yarn.lock
+
+      - name: Install all dependencies
+        run: yarn install --immutable
+
       # - name: Install ccache
       #   run: |
       #     brew install ccache
@@ -53,17 +63,17 @@ jobs:
       #   with:
       #     max-size: '2.0G'
 
-      # - name: Setup ccache
-      #   uses: Chocobo1/setup-ccache-action@v1
-      #   with:
-      #     ccache_options: |
-      #       max_size=2.0G
-      #       compression=false
-      #       compiler_check=content
-      #       sloppiness=clang_index_store,file_stat_matches,include_file_ctime,include_file_mtime,ivfsoverlay,pch_defines,modules,system_headers,time_macros
-      #       depend_mode=true
-      #       file_clone=true
-      #       inode_cache=true
+      - name: Setup ccache
+        uses: Chocobo1/setup-ccache-action@v1
+        with:
+          ccache_options: |
+            max_size=2.0G
+            compression=false
+            compiler_check=content
+            sloppiness=clang_index_store,file_stat_matches,include_file_ctime,include_file_mtime,ivfsoverlay,pch_defines,modules,system_headers,time_macros
+            depend_mode=true
+            file_clone=true
+            inode_cache=true
 
       # - name: Configure ccache
       #   run: |
@@ -74,21 +84,13 @@ jobs:
       #     ccache --set-config="inode_cache=true"
       #     ccache --show-config
 
-      # - name: show ccache config
-      #   run: ccache -p
+      - name: pre - show ccache config
+        run: |
+          ccache -p
+          ccache -s
 
       # - name: pre cache statastics
       #   run: ccache -s
-
-      - name: Setup yarn and caching dependencies
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'yarn'
-          cache-dependency-path: yarn.lock
-
-      - name: Install all dependencies
-        run: yarn install --immutable
 
       - name: Install ruby
         uses: ruby/setup-ruby@v1
@@ -157,8 +159,8 @@ jobs:
           BUNDLE_VERSION: ${GITHUB_RUN_NUMBER}
           BUNDLE_SHORT_VERSION: ${{ github.event.inputs.bundle_short_version }}
 
-      # - name: Check ccache statastics
-      #   run: ccache -s
+      - name: Post - ccache statastics
+        run: ccache -s
 
       - name: Upload ipa, dSYM (debug symbol)
         uses: actions/upload-artifact@v3
